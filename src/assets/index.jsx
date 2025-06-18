@@ -1,0 +1,10 @@
+export { HomeIcon } from './HomeIcon';
+export { MenuIcon } from './MenuIcon';
+export { BookIcon } from './BooksIcon';
+export { CloseIcon } from './CloseIcon';
+export { CommunityIcon } from './CommunityIcon';
+export { MessageIcon } from './MessageIcon';
+export { LogoutIcon } from './LogoutIcon'
+export { HelpIcon } from './HelpIcon'
+export { BellIcon } from './BellIcon'
+export { ProfileIcon } from './ProfileIcon'
