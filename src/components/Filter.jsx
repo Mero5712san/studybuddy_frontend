@@ -1,10 +1,13 @@
 import React from 'react';
+import { ModelComp } from './Model';
 
 export const Filter = () => {
   return (
-    <div>
-      filter page model
-    </div>
+    <ModelComp>
+        <div>
+            filter model
+        </div>
+   </ModelComp>
   );
 }
 

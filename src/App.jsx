@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import ForgetPassword from './pages/auth/ForgetPassword';
@@ -11,9 +11,12 @@ import Materials from './pages/material/Materials';
 import Profile from './pages/profile/Profile';
 import PageNotFound from './pages/pagenotfound/PageNotFoud';
 import { MainLayout } from './components/MainLayout';
+import { Components } from './pages/Components';
+import { LogoutConfirmation } from './components/LogoutConfirmation';
 
 const App = () => {
   const isAuthenticated = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   return (
     <Routes>
@@ -22,6 +25,8 @@ const App = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/forget-password" element={<ForgetPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/components" element={<Components />} />
+      <Route path="/confirm-logout" element={<LogoutConfirmation onCancel={() => navigate(-1)} onConfirm={() => navigate(-1)} />} />
       {/* 
     just the commented the auth check for development purposes ------ > donot remove the comments 
    */}
