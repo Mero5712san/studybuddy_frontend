@@ -29,7 +29,7 @@ export const ModelComp = ({ isOpen, onClose, children, title }) => {
                     }`}
             >
                 {/* Top Title section */}
-                <div className="flex justify-between p-3 border-b">
+                <div className="flex justify-between p-3 border-b"  >
                     <h1 className="text-lg font-bold">{title}</h1>
                     <button
                         onClick={onClose}

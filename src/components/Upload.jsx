@@ -1,9 +1,143 @@
-import React from 'react';
+import React, { useState } from "react";
+import { ModelComp } from "./Model";
+import { InputFeild } from "./InputFeild";
+import { ButtonComp } from "./ButtonComp"
+import { DeleteIcon } from "../assets/DeleteIcon";
+import { UploadIcon } from "../assets/UploadIcon";
 
-export const Upload = () => {
+export const Upload = ({ isOpen, onClose }) => {
+  const [file, setFile] = useState(null);
+  const [title, setTitle] = useState("");
+  const [semester, setSemester] = useState("");
+  const [description, setDescription] = useState("");
+  const [subject, setSubject] = useState("");
+  const [type, setType] = useState("");
+
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setFile(null);
+  };
+
+  const handleSubmit = () => {
+    if (!file) return;
+    const payload = { file, title, semester, description, subject, type };
+    console.log("Form Data:", payload);
+    // send to backend API
+    onClose();
+  };
+
   return (
-    <div>
-      upload page model
-    </div>
+    <ModelComp isOpen={isOpen} onClose={onClose} title="Add Notes">
+      <div className="space-y-4">
+        {/* Upload Section */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Upload :</label>
+          {!file ? (
+            <label className="flex flex-col items-center justify-center h-32 border-2 border-dashed rounded-xl cursor-pointer hover:bg-gray-50">
+              <UploadIcon className="w-8 h-8 text-gray-500" />
+              <p className="text-sm text-gray-500">Upload your file here</p>
+              <input
+                type="file"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+            </label>
+          ) : (
+            <div className="flex items-center justify-between border rounded-lg p-2 bg-gray-100">
+              <span className="text-sm truncate">{file.name}</span>
+              <button
+                onClick={handleRemoveFile}
+                className="p-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+              >
+                <DeleteIcon size={16} />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Title */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Title :</label>
+          <InputFeild
+            placeholder="Enter the title of the note"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+
+        {/* Semester */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Semester :</label>
+          <div className="grid grid-cols-4 gap-2">
+            {["I", "II", "III", "IV", "V", "VI", "VII", "VIII"].map((sem) => (
+              <label key={sem} className="flex items-center gap-1 text-sm">
+                <input
+                  type="radio"
+                  name="semester"
+                  value={sem}
+                  checked={semester === sem}
+                  onChange={(e) => setSemester(e.target.value)}
+                />
+                {sem}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Description */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Description :</label>
+          <InputFeild
+            placeholder="Enter description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+
+        {/* Subject */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Subject :</label>
+          <select
+            className="w-full border rounded-md p-2 text-sm"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+          >
+            <option value="">Select Subject</option>
+            <option value="maths">Mathematics</option>
+            <option value="physics">Physics</option>
+            <option value="chemistry">Chemistry</option>
+          </select>
+        </div>
+
+        {/* Type */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Type :</label>
+          <select
+            className="w-full border rounded-md p-2 text-sm"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+          >
+            <option value="">File type</option>
+            <option value="pdf">PDF</option>
+            <option value="doc">DOC</option>
+            <option value="ppt">PPT</option>
+          </select>
+        </div>
+
+        {/* Submit Button */}
+        <ButtonComp
+          onClick={handleSubmit}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-2 flex items-center justify-center gap-2"
+        >
+          <UploadIcon className="w-4 h-4" />
+          Upload
+        </ButtonComp>
+      </div>
+    </ModelComp>
   );
-}
+};

@@ -10,6 +10,7 @@ export const SideBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+
   const menuItems = [
     { icon: <HomeIcon size={22} color="white" />, label: 'Home', path: '/home' },
     { icon: <BookIcon size={22} color="white" />, label: 'Materials', path: '/materials' },
@@ -53,7 +54,9 @@ export const SideBar = () => {
           className="flex items-center gap-4 p-3 rounded-md cursor-pointer transition-all duration-200
             hover:bg-[#2a2a40] hover:shadow-[0_0_10px_#ef4444] hover:ring-1 hover:ring-red-500"
         >
-          <div className="w-6 h-6 flex items-center justify-center">
+          <div className="w-6 h-6 flex items-center justify-center"
+            onClick={()=>navigate('/confirm-logout')}
+          >
             <LogoutIcon size={22} color="white" />
           </div>
           {isOpen && <span className="text-sm font-medium">Logout</span>}

@@ -1,6 +1,8 @@
 import { HelpIcon, BellIcon, ProfileIcon } from '../assets';
-
+import { useState } from 'react';
+import { Notification } from './Notifications/Notification';
 export const Topbar = () => {
+  const [notify, setNotify] = useState(false)
   return (
     <div className="w-full h-16 bg-[#1e1e2f] flex items-center justify-between px-6 shadow-md border-l">
       <div className="text-white font-bold text-xl tracking-wide">StudyBuddy</div>
@@ -14,12 +16,17 @@ export const Topbar = () => {
       </div>
 
       <div className="flex items-center gap-6">
-        <HelpIcon size={22} color="white" className="cursor-pointer hover:text-violet-400 transition" />
-        <BellIcon isNotify size={22} color="white" className="cursor-pointer hover:text-violet-400 transition" />
-        <span className="bg-white rounded-full p-1">
+        <span className='cursor-pointer'>
+          <HelpIcon size={22} color="white" className="cursor-pointer hover:text-violet-400 transition" />
+        </span>
+        <span onClick={() => setNotify(true)} className='cursor-pointer'>
+          <BellIcon isNotify size={22} color="white" className="cursor-pointer hover:text-violet-400 transition" />
+        </span>
+        <span className="bg-white rounded-full p-1 cursor-pointer" >
           <ProfileIcon size={16} color="grey" className="cursor-pointer hover:text-violet-400 transition" />
         </span>
       </div>
+      <Notification isOpen={notify} onClose={() => setNotify(false)} />
     </div>
   );
 };

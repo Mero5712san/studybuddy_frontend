@@ -11,9 +11,12 @@ import { LogoutConfirmation } from "../components/LogoutConfirmation";
 import { useNavigate } from "react-router-dom";
 import { MessageCard } from "../components/MessageCard";
 import { Middlemodal } from "../components/MiddleModel"
+import { OTPModel } from "../components/OTPModel";
+import { ProfilePic } from "../components/ProfilePic";
 export const Components = () => {
     const [notify, setNotify] = useState(false);
     const [openMiddle, setOpenMiddle] = useState(false);
+    const [openOTP, setOpenOTP] = useState(false);
     const navigate = useNavigate();
     return (
         <div className="flex flex-col gap-4 p-8">
@@ -85,11 +88,27 @@ export const Components = () => {
             </div>
             <ButtonComp btntext="Open middle" onClick={() => setOpenMiddle(true)} />
             <Middlemodal isOpen={openMiddle} onclose={() => setOpenMiddle(false)} >
-                <div className="h-[300px]">
+                <div className="h-[300px] p-6">
                     <button onClick={() => setOpenMiddle(false)} className="absolute top-2 right-2 text-red-500" >X</button>
                     hi every one this is the middle model opener
                 </div>
             </Middlemodal>
+
+
+            <ButtonComp btntext="Open OTP" onClick={() => setOpenOTP(true)} />
+            <OTPModel isOpen={openOTP} onClose={() => setOpenOTP(false)} />
+            
+
+            <ProfilePic
+                name="John Doe"
+                profilePic="https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                bgColor="#6366F1"
+            />
+            <ProfilePic
+                name="John Doe"
+                // profilePic="https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                bgColor="#6366F1"
+            />
 
         </div>
     );

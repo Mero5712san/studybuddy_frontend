@@ -11,10 +11,10 @@ export const InputFeild = (props) => {
     } = props;
     return (
         <div className='w-full flex flex-col gap-2' >
-            {label && <div className='font-semibold capitalize'>
+            {label && <div className='font-semibold capitalize text-[14px]'>
                 {label}
             </div>}
-            <div className='w-full border-2 border-[#717171] rounded-md p-2'>
+            <div className='w-full border-2 border-[#bfbfbf] rounded-md p-2'>
                 <input className='w-full outline-none text-[#5a5a5a]'
                     type={type}
                     placeholder={placeholder}

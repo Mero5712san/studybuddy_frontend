@@ -6,7 +6,7 @@ export const InputComp = (props) => {
     setValue(e.target.value);
   }
   return (
-    <div className='w-full  border-[1px] border-gray-600 rounded-md p-2 flex'>
+    <div className='w-full  border-[2px] border-[#bfbfbf] rounded-md p-2 flex'>
       <input
         type={type || "text"}
         placeholder={placeholder || "Placeholder"}
