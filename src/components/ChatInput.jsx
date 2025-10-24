@@ -1,46 +1,38 @@
+import React from "react";
 import { SendIcon } from "../assets/SendIcon";
-
-export const ChatInput = (props) => {
-  const { value, setValue, onSubmit, placeholder, noSendIcon } = props;
-
-  const onValueChange = (e) => {
-    setValue(e.target.value);
-  };
-
-  const onButtonClick = () => {
-    if (value.trim()) {
+/**
+ * Props:
+ *  - value: string
+ *  - setValue: fn
+ *  - onSubmit: fn(text)
+ *  - placeholder: string
+ */
+export const ChatInput = ({ value, setValue, onSubmit, placeholder = "Type a message..." }) => {
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
       onSubmit(value);
-      setValue("");
     }
   };
 
-  const onKeyDown = (e) => {
-    if (e.key === "Enter" && value.trim()) {
-      onSubmit(value);
-      setValue("");
-    }
-  };
   return (
-    <div className="flex items-center bg-gray-300 p-2 rounded-md w-full">
-      {/* Input box */}
-      <input
-        type="text"
+    <div className="flex items-center gap-2">
+      <textarea
+        rows={1}
         value={value}
-        placeholder={placeholder || "Ask something in community"}
-        onChange={onValueChange}
-        onKeyDown={onKeyDown}
-        className="flex-1 px-4 py-2 rounded-full outline-none border border-gray-200"
+        onChange={(e) => setValue(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder={placeholder}
+        className="flex-1 resize-none rounded-md p-2 focus:outline-none"
       />
-
-      {/* Send button */}
-      {!noSendIcon && (
-        <button
-          className="ml-2 bg-[#041455] p-2 rounded-full text-white hover:bg-[#041455] transition"
-          onClick={onButtonClick}
-        >
-          <SendIcon color="white" />
-        </button>
-      )}
+      <button
+        onClick={() => onSubmit(value)}
+        className="px-4 py-2 bg-purple-600 text-white rounded-md"
+      >
+        <SendIcon color="white" />
+      </button>
     </div>
   );
 };
+
+export default ChatInput;

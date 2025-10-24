@@ -1,11 +1,16 @@
-import { HelpIcon, BellIcon, ProfileIcon } from '../assets';
-import { useState } from 'react';
-import { Notification } from './Notifications/Notification';
+import { HelpIcon, BellIcon, ProfileIcon } from "../assets";
+import { useState } from "react";
+import { Notification } from "./Notifications/Notification";
+import { useNavigate } from "react-router-dom";
+
 export const Topbar = () => {
-  const [notify, setNotify] = useState(false)
+  const navigate = useNavigate();
+  const [notify, setNotify] = useState(false);
   return (
     <div className="w-full h-16 bg-[#1e1e2f] flex items-center justify-between px-6 shadow-md border-l">
-      <div className="text-white font-bold text-xl tracking-wide">StudyBuddy</div>
+      <div className="text-white font-bold text-xl tracking-wide">
+        StudyBuddy
+      </div>
 
       <div className="flex-1 px-10">
         <input
@@ -16,14 +21,32 @@ export const Topbar = () => {
       </div>
 
       <div className="flex items-center gap-6">
-        <span className='cursor-pointer'>
-          <HelpIcon size={22} color="white" className="cursor-pointer hover:text-violet-400 transition" />
+        <span className="cursor-pointer" onClick={() => navigate("/feedback")}>
+          <HelpIcon
+            size={22}
+            color="white"
+            className="cursor-pointer hover:text-violet-400 transition"
+          />
         </span>
-        <span onClick={() => setNotify(true)} className='cursor-pointer'>
-          <BellIcon isNotify size={22} color="white" className="cursor-pointer hover:text-violet-400 transition" />
+        <span onClick={() => setNotify(true)} className="cursor-pointer">
+          <BellIcon
+            isNotify
+            size={22}
+            color="white"
+            className="cursor-pointer hover:text-violet-400 transition"
+          />
         </span>
-        <span className="bg-white rounded-full p-1 cursor-pointer" >
-          <ProfileIcon size={16} color="grey" className="cursor-pointer hover:text-violet-400 transition" />
+        <span
+          className="bg-white rounded-full p-1 cursor-pointer"
+          onClick={() => {
+            navigate("/profile");
+          }}
+        >
+          <ProfileIcon
+            size={16}
+            color="grey"
+            className="cursor-pointer hover:text-violet-400 transition"
+          />
         </span>
       </div>
       <Notification isOpen={notify} onClose={() => setNotify(false)} />

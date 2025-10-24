@@ -13,6 +13,7 @@ import { MessageCard } from "../components/MessageCard";
 import { Middlemodal } from "../components/MiddleModel"
 import { OTPModel } from "../components/OTPModel";
 import { ProfilePic } from "../components/ProfilePic";
+import { Carousel } from "../components/Carousel";
 export const Components = () => {
     const [notify, setNotify] = useState(false);
     const [openMiddle, setOpenMiddle] = useState(false);
@@ -97,7 +98,7 @@ export const Components = () => {
 
             <ButtonComp btntext="Open OTP" onClick={() => setOpenOTP(true)} />
             <OTPModel isOpen={openOTP} onClose={() => setOpenOTP(false)} />
-            
+
 
             <ProfilePic
                 name="John Doe"
@@ -109,7 +110,15 @@ export const Components = () => {
                 // profilePic="https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
                 bgColor="#6366F1"
             />
-
+            <Carousel
+                items={
+                    [
+                        { image: "https://images.pexels.com/photos/1629212/pexels-photo-1629212.jpeg", title: "Math Notes", description: "Algebra and calculus notes by seniors" },
+                        { image: "https://images.pexels.com/photos/317356/pexels-photo-317356.jpeg", title: "Physics Notes", description: "Mechanics and optics study material" },
+                        { image: "https://images.pexels.com/photos/204511/pexels-photo-204511.jpeg", title: "Chemistry Notes", description: "Organic and inorganic chemistry" },
+                    ]
+                }
+            />
         </div>
     );
 }

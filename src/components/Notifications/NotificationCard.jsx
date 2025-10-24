@@ -1,4 +1,3 @@
-// components/Notifications/NotificationCard.jsx
 import React from "react";
 
 export const NotificationCard = ({ name, profilePic, message, id, bgColor }) => {
@@ -11,7 +10,7 @@ export const NotificationCard = ({ name, profilePic, message, id, bgColor }) => 
             <div className="flex items-start gap-3 w-fit">
                 {/* Profile Circle */}
                 <div
-                    className={`w-24 h-8 flex items-center justify-center rounded-full text-white font-bold text-sm`}
+                    className={` p-2 w-12 h-10 flex items-center justify-center rounded-full text-white font-bold text-sm`}
                     style={{ backgroundColor: bgColor || "#6366F1" }}
                 >
                     {profilePic ? (

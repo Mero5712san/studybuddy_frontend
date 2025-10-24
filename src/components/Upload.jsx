@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { ModelComp } from "./Model";
 import { InputFeild } from "./InputFeild";
-import { ButtonComp } from "./ButtonComp"
+import { ButtonComp } from "./ButtonComp";
 import { DeleteIcon } from "../assets/DeleteIcon";
 import { UploadIcon } from "../assets/UploadIcon";
+import { uploadNote } from "../services/NotesService";
 
 export const Upload = ({ isOpen, onClose }) => {
   const [file, setFile] = useState(null);
@@ -12,6 +13,8 @@ export const Upload = ({ isOpen, onClose }) => {
   const [description, setDescription] = useState("");
   const [subject, setSubject] = useState("");
   const [type, setType] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -23,12 +26,27 @@ export const Upload = ({ isOpen, onClose }) => {
     setFile(null);
   };
 
-  const handleSubmit = () => {
-    if (!file) return;
-    const payload = { file, title, semester, description, subject, type };
-    console.log("Form Data:", payload);
-    // send to backend API
-    onClose();
+  const handleSubmit = async () => {
+    if (!file || !title || !semester || !subject || !type) {
+      setError("All fields are required");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError("");
+      const token = localStorage.getItem("token");
+      await uploadNote(
+        { file, title, semester, description, subject, type },
+        token
+      );
+      alert("  Note uploaded successfully!");
+      onClose();
+    } catch (err) {
+      setError(err.error || "Failed to upload note");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -60,17 +78,21 @@ export const Upload = ({ isOpen, onClose }) => {
           )}
         </div>
 
-        {/* Title */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Title :</label>
-          <InputFeild
-            placeholder="Enter the title of the note"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
+        {/* Other Inputs */}
+        <InputFeild
+          label="Title"
+          placeholder="Enter note title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
 
-        {/* Semester */}
+        <InputFeild
+          label="Description"
+          placeholder="Enter short description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+
         <div>
           <label className="block text-sm font-medium mb-1">Semester :</label>
           <div className="grid grid-cols-4 gap-2">
@@ -89,17 +111,6 @@ export const Upload = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        {/* Description */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Description :</label>
-          <InputFeild
-            placeholder="Enter description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
-
-        {/* Subject */}
         <div>
           <label className="block text-sm font-medium mb-1">Subject :</label>
           <select
@@ -114,7 +125,6 @@ export const Upload = ({ isOpen, onClose }) => {
           </select>
         </div>
 
-        {/* Type */}
         <div>
           <label className="block text-sm font-medium mb-1">Type :</label>
           <select
@@ -129,13 +139,14 @@ export const Upload = ({ isOpen, onClose }) => {
           </select>
         </div>
 
-        {/* Submit Button */}
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
         <ButtonComp
           onClick={handleSubmit}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-2 flex items-center justify-center gap-2"
+          btnstyle="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-2 flex items-center justify-center gap-2"
         >
+          {loading ? "Uploading..." : "Upload"}
           <UploadIcon className="w-4 h-4" />
-          Upload
         </ButtonComp>
       </div>
     </ModelComp>
