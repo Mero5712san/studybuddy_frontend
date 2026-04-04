@@ -1,9 +1,10 @@
 import { HelpIcon, BellIcon, ProfileIcon } from "../assets";
+import { UploadIcon } from "../assets/UploadIcon";
 import { useState } from "react";
 import { Notification } from "./Notifications/Notification";
 import { useNavigate } from "react-router-dom";
 
-export const Topbar = () => {
+export const Topbar = ({ onOpenUpload }) => {
   const navigate = useNavigate();
   const [notify, setNotify] = useState(false);
   return (
@@ -21,6 +22,13 @@ export const Topbar = () => {
       </div>
 
       <div className="flex items-center gap-6">
+        <span
+          className="cursor-pointer bg-[#2a2a40] p-1.5 rounded-md hover:bg-[#343452] transition"
+          onClick={onOpenUpload}
+          title="Upload file"
+        >
+          <UploadIcon size={18} color="white" />
+        </span>
         <span className="cursor-pointer" onClick={() => navigate("/feedback")}>
           <HelpIcon
             size={22}
