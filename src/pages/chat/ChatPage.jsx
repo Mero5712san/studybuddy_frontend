@@ -10,6 +10,7 @@ import { MessageIcon } from "../../assets";
 import { VideoIcon } from "../../assets/VideoIcon";
 import { CallIcon } from "../../assets/CallIcon";
 import { socket } from "../../utils/socket";
+import { buildApiUrl } from "../../config/api";
 
 const ChatPage = () => {
   const { chatId, callType: callRouteType } = useParams();
@@ -31,7 +32,7 @@ const ChatPage = () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) throw new Error("No token found");
-        const res = await axios.get("http://localhost:5000/api/users/me", {
+        const res = await axios.get(buildApiUrl("/api/users/me"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         setLoggedInUser(res.data);
@@ -48,7 +49,7 @@ const ChatPage = () => {
       if (!loggedInUser) return;
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/users", {
+        const res = await axios.get(buildApiUrl("/api/users"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         // Exclude logged-in user
@@ -181,7 +182,7 @@ const ChatPage = () => {
                 <h3 className="font-medium text-sm text-gray-800 truncate">{user.name}</h3>
                 <p className="text-xs text-gray-500 truncate">{user.isOnline ? "Online" : "Offline"}</p>
               </div>
-             
+
             </div>
           ))}
         </div>

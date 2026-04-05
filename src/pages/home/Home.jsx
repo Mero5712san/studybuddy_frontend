@@ -4,6 +4,7 @@ import axios from "axios";
 import { Carousel } from "../../components/Carousel";
 import { CardComp } from "../../components/CardComp";
 import { useNavigate } from "react-router-dom";
+import { buildApiUrl } from "../../config/api";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const Home = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/notes");
+        const res = await axios.get(buildApiUrl("/api/notes"));
         const allNotes = res.data.filter(n => !n.is_blocked);
 
         // Carousel: top 3 recently uploaded

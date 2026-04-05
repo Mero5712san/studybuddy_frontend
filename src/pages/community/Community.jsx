@@ -2,8 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import MessageCard from "../../components/MessageCard";
 import ChatInput from "../../components/ChatInput";
 import { io } from "socket.io-client";
-
-const SERVER_URL = "http://localhost:5000"; // adjust if needed
+import { buildApiUrl, SOCKET_URL } from "../../config/api";
 
 const Community = () => {
   const [value, setValue] = useState("");
@@ -18,7 +17,7 @@ const Community = () => {
   useEffect(() => {
     const loadOldMessages = async () => {
       try {
-        const res = await fetch(`${SERVER_URL}/api/community/messages`);
+        const res = await fetch(buildApiUrl("/api/community/messages"));
         const oldMessages = await res.json();
 
         const grouped = {};
@@ -53,7 +52,7 @@ const Community = () => {
 
   // Socket.io setup
   useEffect(() => {
-    socketRef.current = io(SERVER_URL, {
+    socketRef.current = io(SOCKET_URL, {
       transports: ["websocket", "polling"],
       autoConnect: true,
     });

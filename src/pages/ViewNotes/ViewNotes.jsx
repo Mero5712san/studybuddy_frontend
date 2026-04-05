@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { buildApiUrl, buildFileUrl } from "../../config/api";
 
 const ViewNote = () => {
     const { id } = useParams();
@@ -10,7 +11,7 @@ const ViewNote = () => {
     useEffect(() => {
         const fetchNote = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/notes/${id}`);
+                const res = await axios.get(buildApiUrl(`/api/notes/${id}`));
                 setNote(res.data);
             } catch (err) {
                 console.error("Error fetching note:", err);
@@ -22,7 +23,7 @@ const ViewNote = () => {
     if (!note) return <div className="text-center mt-10">Loading...</div>;
 
     // Construct file URL (make sure backend serves /uploads properly)
-    const fileUrl = `http://localhost:5000/${note.file_url.replace(/\\/g, "/")}`;
+    const fileUrl = buildFileUrl(note.file_url);
 
     return (
         <div className="flex flex-col items-center">

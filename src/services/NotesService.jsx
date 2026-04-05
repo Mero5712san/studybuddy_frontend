@@ -1,7 +1,8 @@
 // src/services/NoteService.js
 import axios from "axios";
+import { buildApiUrl } from "../config/api";
 
-const API_URL = "http://localhost:5000/api/notes"; // adjust if needed
+const API_URL = buildApiUrl("/api/notes");
 
 export const uploadNote = async (noteData, token) => {
     try {

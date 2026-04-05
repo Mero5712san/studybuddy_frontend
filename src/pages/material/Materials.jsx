@@ -5,6 +5,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { SortIcon } from "../../assets/SortIcon";
 import { FilterIcon } from "../../assets/FilterIcon";
 import { Filter } from "../../components/Filter";
+import { buildApiUrl } from "../../config/api";
 
 const Materials = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Materials = () => {
   useEffect(() => {
     const fetchNotes = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/notes");
+        const res = await axios.get(buildApiUrl("/api/notes"));
         setNotes(res.data);
       } catch (err) {
         console.error("Error fetching notes:", err);

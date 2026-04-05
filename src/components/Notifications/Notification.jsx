@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { NotificationCard } from "./NotificationCard";
 import { ModelComp } from "../Model";
 import axios from "axios";
+import { buildApiUrl } from "../../config/api";
 
 export const Notification = ({ isOpen, onClose }) => {
   const [notifies, setNotifies] = useState([]);
@@ -16,7 +17,7 @@ export const Notification = ({ isOpen, onClose }) => {
   const fetchNotifications = async () => {
     try {
       const token = localStorage.getItem("token"); // assuming you saved JWT here
-      const res = await axios.get("http://localhost:5000/api/notifications", {
+      const res = await axios.get(buildApiUrl("/api/notifications"), {
         headers: { Authorization: `Bearer ${token}` },
       });
       setNotifies(res.data);

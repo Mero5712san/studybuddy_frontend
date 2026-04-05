@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CloseIcon } from "../assets/CloseIcon";
+import { buildApiUrl } from "../config/api";
 
 const quickActions = [
     { label: "Go to Home", value: "go to home" },
@@ -50,7 +51,7 @@ export const ChatbotDrawer = ({ isOpen, onClose, onOpenUpload }) => {
     const getAssistantReply = async (userText) => {
         const token = localStorage.getItem("token");
 
-        const response = await fetch("http://localhost:5000/api/assistant/chat", {
+        const response = await fetch(buildApiUrl("/api/assistant/chat"), {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

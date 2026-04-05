@@ -1,6 +1,7 @@
 import axios from "axios";
+import { buildApiUrl } from "../config/api";
 
-const API_URL = "http://localhost:5000/api/auth";
+const API_URL = buildApiUrl("/api/auth");
 
 export const loginUser = async (email, password) => {
     try {

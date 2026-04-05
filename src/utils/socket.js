@@ -1,6 +1,5 @@
 import { io } from "socket.io-client";
-
-const SOCKET_URL = "http://localhost:5000"; // your backend URL
+import { SOCKET_URL } from "../config/api";
 
 export const socket = io(SOCKET_URL, {
     autoConnect: false,
