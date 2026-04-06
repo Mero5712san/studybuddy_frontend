@@ -19,7 +19,12 @@ export const sendOtp = async (email) => {
         const res = await axios.post(`${API_URL}/send-otp`, { email });
         return res.data;
     } catch (error) {
-        throw error.response?.data || { error: "Failed to send OTP" };
+        const payload = error.response?.data || {};
+        throw {
+            error: payload.error || "Failed to send OTP",
+            details: payload.details || error.message,
+            code: payload.code,
+        };
     }
 };
 

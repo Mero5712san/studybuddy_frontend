@@ -38,7 +38,7 @@ export const Register = () => {
       await sendOtp(formData.email);
       setOtpModalOpen(true);
     } catch (err) {
-      setError(err.error || "Failed to send OTP");
+      setError(err.details || err.error || "Failed to send OTP");
     }
   };
 
