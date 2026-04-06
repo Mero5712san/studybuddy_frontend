@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import { SideBar } from './sideBar';
-import { Topbar } from './topBar';
+import { SideBar } from './SideBar';
+import { Topbar } from './TopBar';
 import { Upload } from './Upload';
 import { useState } from 'react';
 import { Bot } from 'lucide-react';
