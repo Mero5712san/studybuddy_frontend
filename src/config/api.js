@@ -1,4 +1,4 @@
-const DEFAULT_API_BASE_URL = "https://studybuddy-backend-c8y2.onrender.com";
+const DEFAULT_API_BASE_URL = "https://studybuddy-backend-1-2t38.onrender.com";
 
 export const API_BASE_URL = (
     import.meta.env.VITE_API_BASE_URL || DEFAULT_API_BASE_URL
