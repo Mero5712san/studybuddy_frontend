@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import MessageCard from "../../components/MessageCard";
 import ChatInput from "../../components/ChatInput";
-import { io } from "socket.io-client";
-import { buildApiUrl, SOCKET_URL } from "../../config/api";
+import { socket } from "../../utils/socket";
+import { buildApiUrl } from "../../config/api";
 
 const Community = () => {
   const [value, setValue] = useState("");
@@ -10,7 +10,6 @@ const Community = () => {
     { date: new Date().toDateString(), messages: [] },
   ]);
 
-  const socketRef = useRef(null);
   const messagesEndRef = useRef(null);
 
   // Load community messages from the backend
@@ -52,20 +51,15 @@ const Community = () => {
 
   // Socket.io setup
   useEffect(() => {
-    socketRef.current = io(SOCKET_URL, {
-      transports: ["websocket", "polling"],
-      autoConnect: true,
-    });
-
-    const socket = socketRef.current;
+    socket.connect();
 
     socket.on("connect", () => {
-      console.log("  Connected to socket:", socket.id);
+      console.log("Connected to socket:", socket.id);
       socket.emit("joinCommunity", "community");
     });
 
     socket.on("connect_error", (err) => {
-      console.error("    Socket connection error:", err);
+      console.error("Socket connection error:", err);
     });
 
     // Receive community messages (from others)
@@ -90,8 +84,6 @@ const Community = () => {
 
     return () => {
       socket.off("receiveCommunityMessage", handleReceive);
-      socket.disconnect();
-      socketRef.current = null;
     };
   }, []);
 
@@ -116,14 +108,14 @@ const Community = () => {
     };
 
     // Emit to backend → backend stores + broadcasts (excluding sender)
-    if (socketRef.current && socketRef.current.connected) {
-      socketRef.current.emit("communityMessage", {
+    if (socket && socket.connected) {
+      socket.emit("communityMessage", {
         message: text,
         userInitial: "S",
         userId: 1, // pass actual logged-in user ID here
       });
     } else {
-      console.warn("⚠️ Socket not connected, storing locally only.");
+      console.warn("Socket not connected, storing locally only.");
     }
 
     // Add to UI instantly
